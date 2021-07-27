@@ -1,25 +1,56 @@
-import logo from './logo.svg';
-import './App.css';
+import {createElement, Component} from "react";
+import "./app.css";
+import styles from "./app.module.css";
 
-function App() {
+export function Message(props) {
   return (
-    <div className="App">
+    <div className='App'>
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+          {props.text}
       </header>
     </div>
   );
 }
+export function App(props) {
+  return (
+    <div className={styles.app}>
+      <header className="App-header">
+          {props.render}
+      </header>
+    </div>
+  );
+}
+// export function App(props) {
+//   return (
+//     <div className={styles.app}>
+//       <header onClick={props.handleClick} className="App-header">
+//         Hello from the other side :3 {props.user.name}
+//       </header>
+//         {props.children}
+//     </div>
+//   );
+// }
 
-export default App;
+export const AppWithoutJSX = () => createElement(
+    "div" ,
+    {className: "App"},
+    createElement("header",
+        {className: "App -header"}, "hello W/o JSX")
+    );
+
+export class AppClass extends Component {
+  constructor(props) {
+      super(props);
+      // console.log(props);
+  }
+
+  render() {
+      return (
+          <div className="app">
+              <header onClick={this.props.handleClick} className="App-header">
+                  Hello Class :3 {this.props.user.name}
+              </header>
+          </div>
+      );
+  }
+}
