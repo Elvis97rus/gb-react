@@ -1,21 +1,32 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {App, AppClass, AppWithoutJSX, Message} from './App';
+import {App} from './App';
+import {AppHooks} from "./app.hooks";
 
-const user = {name: 'test'}
-const handleClick = () => console.log('click');
+class Test extends React.Component {
+    state = {
+        isVisible: true,
+    }
+
+    toggle = () => {
+        this.setState({ isVisible: !this.state.isVisible })
+    }
+
+    render() {
+        const { isVisible } = this.state
+
+        return (
+            <div>
+                <button onClick={this.toggle}>toggle</button>
+                {isVisible && <App toggle={this.toggle} />}
+            </div>
+        )
+    }
+}
 
 ReactDOM.render(
   <React.StrictMode>
-    {/*<App user={user} handleClick={handleClick}>*/}
-    {/*    <h1>*/}
-    {/*        childrenApp*/}
-    {/*    </h1>*/}
-    {/*</App>*/}
-    <App render={<Message text={'newTextForMsg'}/>}/>
-    <AppClass user={user} handleClick={handleClick} />
-    <AppWithoutJSX />
-    <Message text={'MESSAGE_TEXT'}/>
+    <AppHooks />
   </React.StrictMode>,
   document.getElementById('root')
 );
