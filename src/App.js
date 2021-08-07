@@ -8,11 +8,7 @@ export class App extends Component {
         console.log("constructor")
         this.state = {counter : 0}
         this.id = null
-
-        // this.handClick = this.handClick.bind(this)
     }
-
-    // state = { counter: 0,}
 
     static getDerivedStateFromProps(props, state) {
         console.log('getDerivedStateFromProps',props, state)
@@ -30,12 +26,6 @@ export class App extends Component {
 
     componentDidMount() {
         console.log('componentDidMount')
-        // запросы
-        // подписки
-        // таймеры
-        // работа с дом
-        // работа с рефами
-        // вызов setState
 
         this.id = setInterval(()=>{
             this.handClick()
@@ -44,18 +34,10 @@ export class App extends Component {
 
     shouldComponentUpdate(nextProps, nextState) {
         console.log('componentDidMount', nextState, this.state)
-
-        // if (nextState.counter <= 10){
-        //     return true
-        // }
-        // return false
         return true
     }
 
     componentWillUnmount() {
-        //отписка
-        //очистка таймеров
-        //очистка эффектов
         console.log('componentWillUnmount')
         clearInterval(this.id)
     }
