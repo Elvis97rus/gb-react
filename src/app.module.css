@@ -2,3 +2,6 @@
     border-radius: 25px;
     background-color: red;
 }
+.app header{
+    border: 1px solid red;
+}
