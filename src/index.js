@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {AppHooks} from "./app.hooks";
+import {ChatBody} from "./app.hooks";
 import { ThemeProvider, createTheme } from "@material-ui/core"
 
 const theme = createTheme({
@@ -15,7 +15,7 @@ const theme = createTheme({
 ReactDOM.render(
   <React.StrictMode>
       <ThemeProvider theme={theme}>
-            <AppHooks />
+            <ChatBody />
       </ThemeProvider>
   </React.StrictMode>,
   document.getElementById('root')

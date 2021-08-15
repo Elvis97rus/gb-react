@@ -28,8 +28,8 @@ export const ChatList = () => {
             <div>ChatList</div>
             <List component="nav" aria-label="contacts">
                 {chats.map((chat, id) => (
-                    <ListItem button>
-                        <p key={id}><strong>{chat.value}</strong>: ({chat.id})</p>
+                    <ListItem key={id} button>
+                        <p><strong>{chat.value}</strong>: ({chat.id})</p>
                     </ListItem>
                 ))}
             </List>
@@ -37,7 +37,7 @@ export const ChatList = () => {
     )
 }
 
-export const AppHooks = () => {
+export const ChatBody = () => {
     const ref = useRef(null)
 
     const classes = useStyles()
@@ -68,7 +68,7 @@ export const AppHooks = () => {
 
     return (
         <div>
-            <h1>AppHooks - Messages_HW</h1>
+            <h1>Chat - Messages_HW</h1>
 
             <div className={classes.root}>
                 <Grid container={true} spacing={3}>
@@ -81,11 +81,11 @@ export const AppHooks = () => {
                               justifyContent="flex-end"
                               alignItems="stretch">
                             {messages.map((message, id) => (
-                                <Grid item={true} xs={12}>
+                                <Grid item={true} xs={12} key={id}>
                                     {(message.author === "System") ?
-                                        <span key={id}
+                                        <span
                                               className={classes.system}>{message.value} = {message.author}</span> :
-                                        <span key={id}
+                                        <span
                                               className={classes.user}>{message.value} = {message.author}</span>}
 
                                 </Grid>
