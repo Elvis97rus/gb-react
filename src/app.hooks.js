@@ -8,12 +8,12 @@ const useStyles = makeStyles((theme) => {
             background: theme.light.color,
         },
         system: {
-            float:"left",
+            float: "left",
             background: "#b3abab",
         },
         user: {
             background: "#708fe8",
-            float:"right",
+            float: "right",
         },
         sendMsgBtn: {
             width: "100%"
@@ -25,7 +25,7 @@ export const ChatList = () => {
     const [chats, setChats] = useState([{value: "Current chat - 1", id: 'first-chat-unique-phrase'}])
     return (
         <>
-        <div>ChatList</div>
+            <div>ChatList</div>
             <List component="nav" aria-label="contacts">
                 {chats.map((chat, id) => (
                     <ListItem button>
@@ -50,7 +50,7 @@ export const AppHooks = () => {
         setValue("")
     }
 
-    const handleEnterMessage = ({ code }) => {
+    const handleEnterMessage = ({code}) => {
         if (code === "Enter") {
             handleSendMessage()
         }
@@ -66,7 +66,6 @@ export const AppHooks = () => {
         }
     }, [messages])
 
-
     return (
         <div>
             <h1>AppHooks - Messages_HW</h1>
@@ -74,7 +73,7 @@ export const AppHooks = () => {
             <div className={classes.root}>
                 <Grid container={true} spacing={3}>
                     <Grid item={true} xs={6}>
-                        <ChatList />
+                        <ChatList/>
                     </Grid>
                     <Grid item={true} xs={6}>
                         <Grid container={true}
@@ -83,20 +82,22 @@ export const AppHooks = () => {
                               alignItems="stretch">
                             {messages.map((message, id) => (
                                 <Grid item={true} xs={12}>
-                                    {(message.author==="System")?
-                                        <span key={id} className={classes.system}>{message.value} = {message.author}</span>:
-                                        <span key={id} className={classes.user}>{message.value} = {message.author}</span>}
+                                    {(message.author === "System") ?
+                                        <span key={id}
+                                              className={classes.system}>{message.value} = {message.author}</span> :
+                                        <span key={id}
+                                              className={classes.user}>{message.value} = {message.author}</span>}
 
                                 </Grid>
                             ))}
                         </Grid>
-
-                        <InputBase inputRef={ref} fullWidth={true} onKeyPress={handleEnterMessage} value={value} onChange={(e) => setValue(e.target.value)}/>
-                        <Button className={classes.sendMsgBtn} variant="contained" color="primary" onClick={handleSendMessage}>send</Button>
+                        <InputBase inputRef={ref} fullWidth={true} onKeyPress={handleEnterMessage} value={value}
+                                   onChange={(e) => setValue(e.target.value)}/>
+                        <Button className={classes.sendMsgBtn} variant="contained" color="primary"
+                                onClick={handleSendMessage}>send</Button>
                     </Grid>
                 </Grid>
             </div>
-
         </div>
     )
 }
