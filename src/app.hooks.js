@@ -1,4 +1,5 @@
 import {useState, useEffect, useRef} from "react"
+import PropTypes, {objectOf} from "prop-types"
 import {Button, TextareaAutosize, Grid, makeStyles, InputBase, ListItem, List} from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => {
@@ -101,3 +102,12 @@ export const ChatBody = () => {
         </div>
     )
 }
+
+ChatBody.propTypes = {
+    messages: PropTypes.arrayOf(
+        PropTypes.shape({
+            value: PropTypes.string.isRequired,
+            author: PropTypes.string.isRequired
+        }).isRequired
+    ).isRequired
+};
