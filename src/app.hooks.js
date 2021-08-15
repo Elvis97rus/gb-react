@@ -1,63 +1,113 @@
-import {useState, useEffect, useCallback, useMemo, useLayoutEffect, useReducer, memo} from "react"
+import {useState, useEffect, useRef} from "react"
+import PropTypes, {objectOf} from "prop-types"
+import {Button, TextareaAutosize, Grid, makeStyles, InputBase, ListItem, List} from '@material-ui/core';
 
-const useMyHook = () => {
-    const [messages, setMessages] = useState([
-        //{value: 'Hello', author: "Vasya"},
-    ])
-    const [value, setValue] = useState("")
+const useStyles = makeStyles((theme) => {
+    return {
+        root: {
+            flexGrow: 1,
+            background: theme.light.color,
+        },
+        system: {
+            float: "left",
+            background: "#b3abab",
+        },
+        user: {
+            background: "#708fe8",
+            float: "right",
+        },
+        sendMsgBtn: {
+            width: "100%"
+        }
+    }
+})
 
-    return {messages, setMessages, value, setValue}
+export const ChatList = () => {
+    const [chats, setChats] = useState([{value: "Current chat - 1", id: 'first-chat-unique-phrase'}])
+    return (
+        <>
+            <div>ChatList</div>
+            <List component="nav" aria-label="contacts">
+                {chats.map((chat, id) => (
+                    <ListItem key={id} button>
+                        <p><strong>{chat.value}</strong>: ({chat.id})</p>
+                    </ListItem>
+                ))}
+            </List>
+        </>
+    )
 }
 
-export const AppHooks = () => {
-    const [counter, setCounter] = useState(1)
+export const ChatBody = () => {
+    const ref = useRef(null)
 
-    const {messages, setMessages,value, setValue} = useMyHook()
+    const classes = useStyles()
+    const [messages, setMessages] = useState([])
+
+    const [value, setValue] = useState("")
 
     const handleSendMessage = () => {
-        setMessages(state => [...state, {value, author: "Vasya"}])
+        setMessages(state => [...state, {value, author: "User"}])
         setValue("")
     }
 
-    const foo = useCallback(() => {}, [])
-    const sum = useMemo(() => {
-        console.log("memo")
-        return 1+1
-    }, [])
+    const handleEnterMessage = ({code}) => {
+        if (code === "Enter") {
+            handleSendMessage()
+        }
+    }
 
-    useEffect(() =>{
-        if (messages[messages.length-1] &&messages[messages.length-1].author !== "System"){
-            setTimeout(()=>{
-                setMessages(state => [...state, {value:"Message received", author: "System"}])
-            },1500)
+    useEffect(() => {
+        ref.current.focus()
+        if (messages[messages.length - 1] && messages[messages.length - 1].author !== "System") {
+            setTimeout(() => {
+                setMessages(state => [...state, {value: "Message received", author: "System"}])
+            }, 1500)
+
         }
     }, [messages])
 
-    useLayoutEffect(()=>{
-
-    },[])
-
     return (
         <div>
-            <h1>AppHooks</h1>
-            <h1>counter: {counter}</h1>
-            <button onClick={()=>setCounter(()=> counter +1)}>setCounter</button>
-            {/*<button onClick={()=>setCounter((state)=> state +1)}>setCounter</button>*/}
+            <h1>Chat - Messages_HW</h1>
 
-            <ul>
-                {messages.map((message, id) => (
-                    <li key={id}> {message.value} = {message.author}</li>
-                ))}
-            </ul>
-            <input value={value} onChange={(e) => setValue(e.target.value)} />
-            <button onClick={handleSendMessage}>send</button>
+            <div className={classes.root}>
+                <Grid container={true} spacing={3}>
+                    <Grid item={true} xs={6}>
+                        <ChatList/>
+                    </Grid>
+                    <Grid item={true} xs={6}>
+                        <Grid container={true}
+                              direction="column"
+                              justifyContent="flex-end"
+                              alignItems="stretch">
+                            {messages.map((message, id) => (
+                                <Grid item={true} xs={12} key={id}>
+                                    {(message.author === "System") ?
+                                        <span
+                                              className={classes.system}>{message.value} = {message.author}</span> :
+                                        <span
+                                              className={classes.user}>{message.value} = {message.author}</span>}
 
-            <Test foo={foo} />
+                                </Grid>
+                            ))}
+                        </Grid>
+                        <InputBase inputRef={ref} fullWidth={true} onKeyPress={handleEnterMessage} value={value}
+                                   onChange={(e) => setValue(e.target.value)}/>
+                        <Button className={classes.sendMsgBtn} variant="contained" color="primary"
+                                onClick={handleSendMessage}>send</Button>
+                    </Grid>
+                </Grid>
+            </div>
         </div>
     )
 }
 
-const Test = memo(() => {
-    console.log("render")
-    return <h1>Test__</h1>
-})
+ChatBody.propTypes = {
+    messages: PropTypes.arrayOf(
+        PropTypes.shape({
+            value: PropTypes.string.isRequired,
+            author: PropTypes.string.isRequired
+        }).isRequired
+    ).isRequired
+};
