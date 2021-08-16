@@ -1,0 +1,24 @@
+.icon,
+.text {
+  color: #fff;
+}
+
+.text span {
+  font-size: 14px;
+}
+
+.description {
+  width: 100%;
+}
+
+.description .text:last-child {
+  text-align: right;
+}
+.notification {
+  background: gray;
+  margin: 15% auto;
+  border: 1px solid gray;
+  border-radius: 60px;
+  padding: 4% 17%;
+  text-transform: uppercase;
+}
